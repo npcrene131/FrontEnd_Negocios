@@ -1,0 +1,108 @@
+<div class="container">
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-card-title>Gestión de Negocios</mat-card-title>
+      <mat-card-subtitle>Ingresa la información detallada del establecimiento</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario ID</mat-label>
+          <input matInput type="number" [(ngModel)]="newNegocio.Usu_NegocioID" placeholder="Ej. 1">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre del Negocio</mat-label>
+          <input matInput [(ngModel)]="newNegocio.NegocioNombre" placeholder="Nombre comercial">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput [(ngModel)]="newNegocio.NegocioTelefono" placeholder="644 000 0000">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Latitud</mat-label>
+          <input matInput type="number" [(ngModel)]="newNegocio.NegocioLatitud">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Longitud</mat-label>
+          <input matInput type="number" [(ngModel)]="newNegocio.NegocioLongitud">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput [(ngModel)]="newNegocio.NegocioDescripcion" rows="2"></textarea>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button color="basic" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+      <button mat-raised-button color="primary" class="save-btn" (click)="saveNegocio()">
+        {{ isEditing ? 'Actualizar Negocio' : 'Registrar Negocio' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="table-card">
+    <div class="table-container">
+      <table mat-table [dataSource]="negocios" class="custom-table">
+
+        <ng-container matColumnDef="Usu_NegocioID">
+          <th mat-header-cell *matHeaderCellDef> User ID </th>
+          <td mat-cell *matCellDef="let n"> <span class="badge">{{n.Usu_NegocioID}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NegocioId">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let n"> {{n.NegocioId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NegocioLatitud">
+          <th mat-header-cell *matHeaderCellDef> Latitud </th>
+          <td mat-cell *matCellDef="let n" class="text-muted"> {{n.NegocioLatitud}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NegocioLongitud">
+          <th mat-header-cell *matHeaderCellDef> Longitud </th>
+          <td mat-cell *matCellDef="let n" class="text-muted"> {{n.NegocioLongitud}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NegocioNombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let n"> <strong>{{n.NegocioNombre}}</strong> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NegocioDescripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let n"> {{n.NegocioDescripcion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NegocioTelefono">
+          <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+          <td mat-cell *matCellDef="let n"> {{n.NegocioTelefono}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let n">
+            <div class="action-buttons">
+              <button mat-icon-button color="primary" (click)="editNegocio(n)" title="Editar">
+                <span>✏️</span>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteNegocio(n.NegocioId)" title="Eliminar">
+                <span>🗑️</span>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,83 @@
+<div class="container">
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-card-title>Gestión de Usuarios de Negocio</mat-card-title>
+      <mat-card-subtitle>Ingresa la información detallada del usuario</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>ID UsuarioNegocio</mat-label>
+          <input matInput type="number" [(ngModel)]="newUsuarioNegocio.UsuarioNegoID" placeholder="Ej. 1">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput [(ngModel)]="newUsuarioNegocio.UsuarioNegoNombre" placeholder="Nombre completo">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Correo</mat-label>
+          <input matInput type="email" [(ngModel)]="newUsuarioNegocio.UsuarioNegoCorreo" placeholder="usuario@correo.com">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" [(ngModel)]="newUsuarioNegocio.UsuarioNegoContra" placeholder="********">
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button color="basic" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+      <button mat-raised-button color="primary" class="save-btn" (click)="saveUsuarioNegocio()">
+        {{ isEditing ? 'Actualizar Usuario' : 'Registrar Usuario' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="table-card">
+    <div class="table-container">
+      <table mat-table [dataSource]="usuariosNegocio" class="custom-table">
+
+        <ng-container matColumnDef="UsuarioNegoID">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let u"> <span class="badge">{{u.UsuarioNegoID}}</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="UsuarioNegoNombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let u"> <strong>{{u.UsuarioNegoNombre}}</strong> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="UsuarioNegoCorreo">
+          <th mat-header-cell *matHeaderCellDef> Correo </th>
+          <td mat-cell *matCellDef="let u"> {{u.UsuarioNegoCorreo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="UsuarioNegoContra">
+          <th mat-header-cell *matHeaderCellDef> Contraseña </th>
+          <td mat-cell *matCellDef="let u"> {{u.UsuarioNegoContra}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let u">
+            <div class="action-buttons">
+              <button mat-icon-button color="primary" (click)="editUsuarioNegocio(u)" title="Editar">
+                <span>✏️</span>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteUsuarioNegocio(u.UsuarioNegoID)" title="Eliminar">
+                <span>🗑️</span>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-card>
+</div>
