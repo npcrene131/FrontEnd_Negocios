@@ -85,3 +85,26 @@ mat-card-title {
     grid-column: span 1;
   }
 }
+/* Esto hará que la tabla no crezca infinito y el mapa suba */
+.table-container {
+  max-height: 400px; /* Ajusta la altura a tu gusto */
+  overflow-y: auto;  /* Esto pone el scroll dentro de la tabla */
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+/* Contenedor del mapa */
+/* Agrega o reemplaza esto en tu Negocio.css */
+#map {
+  height: 450px;
+  width: 100%;
+  display: block; /* Asegura que ocupe su lugar */
+  z-index: 1;     /* Evita conflictos de capas que causan huecos */
+}
+
+.map-wrapper {
+  width: 100%;
+  background-color: #f0f0f0; /* Color de fondo mientras cargan los cuadros */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}

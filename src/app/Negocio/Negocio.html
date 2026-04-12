@@ -1,4 +1,6 @@
 <div class="container">
+  <h1>Negocios</h1>
+  
   <mat-card class="main-card">
     <mat-card-header>
       <mat-card-title>Gestión de Negocios</mat-card-title>
@@ -50,7 +52,6 @@
   <mat-card class="table-card">
     <div class="table-container">
       <table mat-table [dataSource]="negocios" class="custom-table">
-
         <ng-container matColumnDef="Usu_NegocioID">
           <th mat-header-cell *matHeaderCellDef> User ID </th>
           <td mat-cell *matCellDef="let n"> <span class="badge">{{n.Usu_NegocioID}}</span> </td>
@@ -104,5 +105,55 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
+  </mat-card>
+
+  <mat-card class="map-card">
+    <mat-card-header>
+      <mat-card-title>Buscador Global de Lugares</mat-card-title>
+      
+      <div style="margin-left: auto; display: flex; gap: 10px; align-items: center;">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Buscar local o categoría</mat-label>
+          <input matInput [(ngModel)]="searchQuery" (keyup.enter)="getPlaces()" placeholder="Ej: Tacos en Obregón">
+        </mat-form-field>
+        
+        <button mat-flat-button color="primary" (click)="getPlaces()">
+          <span>🔍 Buscar</span>
+        </button>
+      </div>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="table-container" *ngIf="results && results.length > 0">
+        <table mat-table [dataSource]="results" class="custom-table">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let r"> {{r.title}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> Dirección </th>
+            <td mat-cell *matCellDef="let r"> {{r.address}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rating">
+            <th mat-header-cell *matHeaderCellDef> Rating </th>
+            <td mat-cell *matCellDef="let r"> {{r.rating || 'N/A'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['name','address','rating']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['name','address','rating'];"></tr>
+        </table>
+      </div>
+
+      <div class="map-wrapper" 
+        style="margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #ccc;">
+        <!-- Contenedor del mapa Leaflet -->
+      <div id="map" style="height: 450px; width: 100%; border: 1px solid #ccc; border-radius: 8px;"></div>
+
+      </div>
+
+      
+    </mat-card-content>
   </mat-card>
 </div>

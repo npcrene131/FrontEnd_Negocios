@@ -6,8 +6,9 @@ import { routes } from "./app.routes"; // importa tus rutas
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(routes),// aquí conectas el router
     provideHttpClient(),
     importProvidersFrom(FormsModule),
-    provideRouter(routes) // aquí conectas el router
+     
   ]
 };
