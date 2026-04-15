@@ -1,22 +1,56 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1976d2, #42a5f5);
+  height: 100vh;
+}
+
+/* Contenedor centrado */
 .menu-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 100px;
-  gap: 20px;
+  height: 100%;
 }
 
+/* Tarjeta del menú */
+.menu-card {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 280px;
+}
+
+.menu-card h1 {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Botones */
 button {
-  width: 200px;
-  padding: 12px;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
   font-size: 16px;
-  background-color: #1976d2;
+  font-weight: 500;
+  background: linear-gradient(135deg, #1976d2, #1e88e5);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+/* Hover animado */
 button:hover {
-  background-color: #125ca1;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, #1565c0, #1976d2);
+}
+
+/* Click */
+button:active {
+  transform: scale(0.97);
 }
