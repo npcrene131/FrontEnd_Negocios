@@ -13,46 +13,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
   selector: 'app-ofertas',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatInputModule,
-    MatCardModule,
-    MatFormFieldModule
-  ],
+  imports: [CommonModule, FormsModule, MatTableModule, MatButtonModule, MatInputModule, MatCardModule, MatFormFieldModule],
   templateUrl: './Oferta.html',
   styleUrls: ['./Oferta.css']
 })
 export class OfertaComponent implements OnInit {
   ofertas: Oferta[] = [];
+  isEditing = false;
+  displayedColumns: string[] = ['OfertaId', 'ProductoId', 'NegocioID', 'Descuento', 'FechaInicio', 'FechaFinal', 'actions'];
 
   newOferta: Oferta = {
-    OfertaId: 0,
-    ProductoId: 0,
-    NegocioID: 0,
-    Descuento: 0,
-    FechaInicio: '', 
-    FechaFinal: ''
+    OfertaId: 0, ProductoId: 0, NegocioID: 0, Descuento: 0, FechaInicio: '', FechaFinal: ''
   };
 
-  displayedColumns: string[] = [
-    'OfertaId',
-    'ProductoId',
-    'NegocioID',
-    'Descuento',
-    'FechaInicio',
-    'FechaFinal',
-    'actions'
-  ];
-
-  isEditing = false;
-
-  constructor(
-    private ofertaService: OfertaService,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(private ofertaService: OfertaService, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getOfertas();
@@ -60,49 +34,38 @@ export class OfertaComponent implements OnInit {
 
   getOfertas() {
     this.ofertaService.getOferta().subscribe({
-      next: (data) => {
-        this.ofertas = [...data];
+      next: (data: any) => {
+        this.ofertas = data;
         this.cd.detectChanges();
       },
-      error: (err) => console.error("Error de conexión:", err)
+      error: (err: any) => console.error(err)
     });
   }
 
   saveOferta() {
-    if (this.isEditing) {
-      this.ofertaService.updateOferta(this.newOferta).subscribe({
-        next: () => this.resetForm(),
-        error: (err) => console.error("Error al actualizar oferta:", err)
-      });
-    } else {
-      this.ofertaService.insertOferta(this.newOferta).subscribe({
-        next: () => this.resetForm(),
-        error: (err) => console.error("Error al insertar oferta:", err)
-      });
-    }
+    const request = this.isEditing 
+      ? this.ofertaService.updateOferta(this.newOferta) 
+      : this.ofertaService.insertOferta(this.newOferta);
+
+    request.subscribe({
+      next: () => this.resetForm(),
+      error: (err: any) => console.error(err)
+    });
   }
 
-  editOferta(o: Oferta) {
+  editOferta(o: any) {
     this.newOferta = { ...o };
     this.isEditing = true;
   }
 
   deleteOferta(id: number) {
     this.ofertaService.deleteOferta(id).subscribe({
-      next: () => this.getOfertas(),
-      error: (err) => console.error("Error al eliminar oferta:", err)
+      next: () => this.getOfertas()
     });
   }
 
   resetForm() {
-    this.newOferta = {
-      OfertaId: 0,
-      ProductoId: 0,
-      NegocioID: 0,
-      Descuento: 0,
-      FechaInicio: '',
-      FechaFinal: ''
-    };
+    this.newOferta = { OfertaId: 0, ProductoId: 0, NegocioID: 0, Descuento: 0, FechaInicio: '', FechaFinal: '' };
     this.isEditing = false;
     this.getOfertas();
   }

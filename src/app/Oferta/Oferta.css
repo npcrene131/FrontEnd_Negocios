@@ -85,3 +85,19 @@ mat-card-title {
     grid-column: span 1;
   }
 }
+
+.productos-container {
+  margin: 20px auto;
+  max-width: 400px; /* Lo hace más angosto para que no estorbe */
+}
+
+.small-table {
+  width: 100%;
+  background-color: #f9f9f9;
+}
+
+h3 {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+}
